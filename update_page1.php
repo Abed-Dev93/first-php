@@ -8,7 +8,7 @@ if (isset($_GET['id'])) {
     $query = "select * from students where `id` = '$id'";
         $result = mysqli_query($connection, $query);
         if (!$result)
-            die("Query Failed" . mysqli_error());
+            die("Query Failed" . mysqli_error($connection));
         else
             $row = mysqli_fetch_assoc($result);
 }
@@ -22,11 +22,11 @@ if (isset($_GET['id'])) {
         $lname = $_POST['lname'];
         $age = $_POST['age'];
 
-        $query = "update `students` set `first_name` = `$fname`, `last_name` = `$lname`, `age` = `$age` where `id` = `$id_new`";
-        $result = mysqli_query($connection, $result);
+        $query = "update `students` set `first_name` = '$fname', `last_name` = '$lname', `age` = '$age' where `id` = '$id_new'";
+        $result = mysqli_query($connection, $query);
 
         if (!$result)
-            die("Query Failed" . mysqli_error());
+            die("Query Failed" . mysqli_error($connection));
         else
             header("location:index.php?update_msg=You have successfully update the data");
     }
@@ -47,9 +47,6 @@ if (isset($_GET['id'])) {
         <input type="text" name="age" class="form-control" value="<?php echo $row['age']; ?>">
     </div>
     <button type="submit" class="btn btn-success" name="update_student">Update</button>
-    <?php echo $id_new; ?>
 </form>
-
-
 
 <?php include ("footer.php"); ?>
