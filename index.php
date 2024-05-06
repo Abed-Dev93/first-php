@@ -43,6 +43,7 @@ include ("databaseConnect.php");
         ?>
     </tbody>
 </table>
+<a href="login.php" class="btn btn-secondary text-white" name="auth_login">Account</a>
 
 <?php
 
