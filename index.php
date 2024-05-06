@@ -8,13 +8,15 @@ include ("databaseConnect.php");
     <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">ADD STUDENTS</button>
 </div>
 
-<table class="table table-hover table-bordered table-striped">
+<table class="table table-hover table-bordered table-striped text-center">
     <thead>
         <tr>
             <th>ID</th>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Age</th>
+            <th>Update</th>
+            <th>Delete</th>
         </tr>
     </thead>
     <tbody>
@@ -32,6 +34,8 @@ include ("databaseConnect.php");
                     <td><?php echo $row["first_name"]; ?></td>
                     <td><?php echo $row["last_name"]; ?></td>
                     <td><?php echo $row["age"]; ?></td>
+                    <td><a href="update_page1.php?id=<?php echo $row["id"]; ?>" class="btn btn-success">Update</a></td>
+                    <td><a href="delete_page.php?id=<?php echo $row["id"]; ?>" class="btn btn-danger">Delete</a></td>
                 </tr>
                 <?php
             }
@@ -45,12 +49,14 @@ include ("databaseConnect.php");
     if (isset($_GET['message']))
         echo "<h6>" . $_GET['message'] . "</h6>";
 
-?>
-
-<?php 
-
     if (isset($_GET['insert_msg']))
         echo "<h6>" . $_GET['insert_msg'] . "</h6>";
+
+    if (isset($_GET['update_msg']))
+        echo "<h6>" . $_GET['update_msg'] . "</h6>";
+
+    if (isset($_GET['delete_msg']))
+        echo "<h6>" . $_GET['delete_msg'] . "</h6>";
 
 ?>
 
@@ -66,14 +72,19 @@ include ("databaseConnect.php");
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="fname">First Name</label>
-                        <input type="text" name="fname" class="form-control">
-                        <label for="lname">last Name</label>
-                        <input type="text" name="lname" class="form-control">
-                        <label for="age">Age</label>
-                        <input type="text" name="age" class="form-control">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="fname">First Name</label>
+                            <input type="text" name="fname" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="lname">last Name</label>
+                            <input type="text" name="lname" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input type="text" name="age" class="form-control">
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
