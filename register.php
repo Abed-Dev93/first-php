@@ -9,8 +9,14 @@ if (isset($_POST['register'])) {
     $repeat = $_POST['repeat'];
     $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
+    $queryAuth = "select * from authentication where `username` = '$username'";
+    $resultAuth = mysqli_query($connection, $queryAuth);
+
     if (empty($fullname) || empty($username) || empty($password) || empty($repeat))
         header("location:register.php?reg_msg=All the fields are required");
+    else if (mysqli_num_rows($resultAuth) > 0) {
+        header("location:register.php?reg_msg=Username already exists, try another one");
+    }
     else if ($password != $repeat)
         header("location:register.php?reg_msg=Password does not match, try again");
     else {
