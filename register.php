@@ -1,6 +1,7 @@
 <?php
 include ("header.php");
 include ("databaseConnect.php");
+session_start();
 
 if (isset($_POST['register'])) {
     $fullname = $_POST['fullname'];
@@ -14,9 +15,8 @@ if (isset($_POST['register'])) {
 
     if (empty($fullname) || empty($username) || empty($password) || empty($repeat))
         header("location:register.php?reg_msg=All the fields are required");
-    else if (mysqli_num_rows($resultAuth) > 0) {
+    else if (mysqli_num_rows($resultAuth) > 0)
         header("location:register.php?reg_msg=Username already exists, try another one");
-    }
     else if ($password != $repeat)
         header("location:register.php?reg_msg=Password does not match, try again");
     else {
@@ -25,8 +25,14 @@ if (isset($_POST['register'])) {
 
         if (!$result)
             die("Query Failed" . mysqli_error($connection));
-        else
-            header("location:register.php?reg_msg=New Account has been created successfully");
+        else {
+            $queryAuthStart = "select * from authentication where `username` = '$username'";
+            $resultAuthStart = mysqli_query($connection, $queryAuth);
+            $row = mysqli_fetch_assoc($resultAuthStart);
+            $_SESSION['user'] = $row['id'];
+            $hash_id = password_hash($_SESSION['user'], PASSWORD_DEFAULT);
+            header("location:profile.php?u=" . $hash_id);
+        }
     }
 }
 
